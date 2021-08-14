@@ -51,7 +51,40 @@ const postDevice = async(req, res = response) => {
 
 }
 
+const updateDevice = async(req, res = response) => {
+
+    const {uuid} = req.body;
+    
+
+    try {
+        
+        const device = await Device.findAll({
+            where: {
+                "uuid": uuid
+            }
+        });
+
+        if(!device) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Device not found'
+            });
+        }
+
+        const newDevice = {
+            ...req.body
+        }
+
+        // const deviceUpdated = await Device.
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 module.exports = {
     getDevices,
-    postDevice
+    postDevice,
+    updateDevice
 }

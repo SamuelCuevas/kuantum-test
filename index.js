@@ -15,7 +15,8 @@ app.use( express.static('public'));
 app.use( express.json() );
 
 // Routes
-// app.use('/chronometer', require('./controller/times'));
+app.use('/api/device', require('./routes/device'));
+app.use('/api/alert', require('./routes/alert'));
 
 // Listen
 app.listen( process.env.PORT, () => {

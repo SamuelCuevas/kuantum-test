@@ -1,15 +1,21 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../db');
+const sequelize = require('../database/db');
+const Device = require('./Device');
 
 class Alert extends Model {}
-Time.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+Alert.init({
+  uuid: {
+    type: DataTypes.STRING,
+    primaryKey: true
   },
-  times_saved: DataTypes.STRING
-}, { sequelize, modelName: 'alert' });
+  registered_value: DataTypes.FLOAT,
+  alert_data: DataTypes.JSON,
+  createdAt: DataTypes.DATE,
+  updatedAt: DataTypes.DATE
 
+}, { sequelize, freezeTableName: true, modelName: 'alert' });
+
+
+Alert.Device = Alert.belongsTo(Device);
 
 module.exports = Alert;

@@ -34,7 +34,7 @@ const postDevice = async(req, res = response) => {
         .then( dev => {
             return res.status(200).json({
                 ok: true,
-                msg: 'devices',
+                msg: 'Created device:',
                 dev
             });
         }).catch(err => {
@@ -53,29 +53,22 @@ const postDevice = async(req, res = response) => {
 
 const updateDevice = async(req, res = response) => {
 
-    const {uuid} = req.body;
+    const uuid = req.params.id;
     
-
     try {
         
-        const device = await Device.findAll({
+        await Device.update({
+            ...req.body
+        }, {
             where: {
-                "uuid": uuid
+                uuid: uuid
             }
         });
 
-        if(!device) {
-            return res.status(404).json({
-                ok: false,
-                msg: 'Device not found'
-            });
-        }
-
-        const newDevice = {
-            ...req.body
-        }
-
-        // const deviceUpdated = await Device.
+        res.json({
+            ok: true,
+            msg: `Updated device uuid: ${ uuid }`
+        })
 
     } catch (error) {
         console.log(error);
@@ -83,8 +76,32 @@ const updateDevice = async(req, res = response) => {
 
 }
 
+const deleteDevice = async(req, res = response) => {
+
+    const uuid = req.params.id;
+
+    try {
+
+        await Device.destroy({
+            where: {
+                uuid: uuid
+            }
+        });
+    
+        res.json({
+            ok: true,
+            msg: `Deleted device uuid: ${ uuid }`
+        });
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 module.exports = {
     getDevices,
     postDevice,
-    updateDevice
+    updateDevice,
+    deleteDevice
 }

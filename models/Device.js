@@ -10,9 +10,9 @@ Device.init({
   name: DataTypes.STRING,
   description: DataTypes.STRING,
   alerts_config: DataTypes.JSON,
-  created_at: DataTypes.DATE,
-  updated_at: DataTypes.DATE
-}, { sequelize, freezeTableName: true, timestamps: false, modelName: 'device' });
+  createdAt: DataTypes.DATE,
+  updatedAt: DataTypes.DATE
+}, { sequelize, freezeTableName: true, modelName: 'device' });
 
 
 module.exports = Device;

@@ -1,8 +1,10 @@
 const { Router } = require('express');
-const { getAlerts, postAlert, updateAlert, deleteAlert } = require('../controllers/alert');
+const { getAlerts, postAlert, updateAlert, deleteAlert, getAlertById } = require('../controllers/alert');
 const router = Router();
 
 router.get('/', getAlerts );
+
+router.post('/', getAlertById );
 
 router.post('/new', postAlert );
 

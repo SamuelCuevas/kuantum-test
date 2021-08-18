@@ -21,6 +21,27 @@ const getAlerts = async(req, res = response) => {
 
 }
 
+const getAlertById = async(req, res = response) => {
+
+    const { uuid } = req.body;
+
+    try {
+        
+        const alert = await Alert.findAll({
+            where: {
+                uuid: uuid
+            }
+        });
+        return res.status(200).json({
+            ok: true,
+            alert
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
 const postAlert = async(req, res = response) => {
 
     if( req.body === null) {
@@ -102,6 +123,7 @@ const deleteAlert = async(req, res = response) => {
 
 module.exports = {
     getAlerts,
+    getAlertById,
     postAlert,
     updateAlert,
     deleteAlert

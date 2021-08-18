@@ -11,7 +11,7 @@ const getDevices = async(req, res = response) => {
         return res.status(200).json({
             ok: true,
             msg: 'devices',
-            dev
+            "devices": dev
         });
 
     } catch (error) {
@@ -19,6 +19,26 @@ const getDevices = async(req, res = response) => {
     }
 }
 
+const getDeviceById = async(req, res = response) => {
+
+    const { uuid } = req.body;
+
+    try {
+        
+        const dev = await Device.findAll({
+            where: {
+                uuid: uuid
+            }
+        });
+        return res.status(200).json({
+            ok: true,
+            dev
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+} 
 
 const postDevice = async(req, res = response) => {
 
@@ -101,6 +121,7 @@ const deleteDevice = async(req, res = response) => {
 
 module.exports = {
     getDevices,
+    getDeviceById,
     postDevice,
     updateDevice,
     deleteDevice

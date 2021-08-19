@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/', getDevices );
 
-router.post('/', getDeviceById );
+router.get('/:id', getDeviceById );
 
 router.post('/new', postDevice );
 

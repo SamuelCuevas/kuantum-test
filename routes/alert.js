@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/', getAlerts );
 
-router.post('/', getAlertById );
+router.get('/:id', getAlertById );
 
 router.post('/new', postAlert );
 

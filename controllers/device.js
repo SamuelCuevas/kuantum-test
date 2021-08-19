@@ -16,12 +16,17 @@ const getDevices = async(req, res = response) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 }
 
 const getDeviceById = async(req, res = response) => {
 
-    const { uuid } = req.body;
+    const uuid = req.params.id;
+
+    console.log(uuid);
 
     try {
         
@@ -37,6 +42,9 @@ const getDeviceById = async(req, res = response) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 } 
 
@@ -54,7 +62,7 @@ const postDevice = async(req, res = response) => {
         .then( dev => {
             return res.status(200).json({
                 ok: true,
-                msg: 'Created device:',
+                msg: `Created device uuid: ${ req.body.uuid }`,
                 dev
             });
         }).catch(err => {
@@ -92,6 +100,10 @@ const updateDevice = async(req, res = response) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({
+            ok: false,
+            error
+        });
     }
 
 }
@@ -114,7 +126,10 @@ const deleteDevice = async(req, res = response) => {
         });
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 
 }

@@ -7,39 +7,46 @@ const getAlerts = async(req, res = response) => {
 
     try {
 
-        const alert = await Alert.findAll();
+        const alerts = await Alert.findAll();
         
         return res.status(200).json({
             ok: true,
             msg: 'alerts',
-            alert
+            alerts
         });
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 
 }
 
 const getAlertById = async(req, res = response) => {
 
-    const { uuid } = req.body;
+    const uuid = req.params.id;
 
-    try {
+    console.log(uuid);
+    // try {
         
-        const alert = await Alert.findAll({
-            where: {
-                uuid: uuid
-            }
-        });
-        return res.status(200).json({
-            ok: true,
-            alert
-        })
+    //     const alert = await Alert.findAll({
+    //         where: {
+    //             uuid: uuid
+    //         }
+    //     });
+    //     return res.status(200).json({
+    //         ok: true,
+    //         alert
+    //     })
 
-    } catch (error) {
-        console.log(error);
-    }
+    // } catch (error) {
+    //     console.log(error);
+    // res.status(500).json({
+    //     ok: false
+    // });
+    // }
 } 
 
 const postAlert = async(req, res = response) => {
@@ -94,6 +101,9 @@ const updateAlert = async(req, res = response) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 
 }
@@ -116,7 +126,10 @@ const deleteAlert = async(req, res = response) => {
         });
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(500).json({
+            ok: false
+        });
     }
 
 }

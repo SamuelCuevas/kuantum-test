@@ -11,3 +11,6 @@ Tecnologias usadas:
     - React / react-router-dom / react-modal / sweetalert / moment
 # Backend:
     - Node / Express / Sequelize
+
+# Link del repositorio frontend para mas detalles: 
+### `https://github.com/SamuelCuevas/kuantum-test-front`

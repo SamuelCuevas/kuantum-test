@@ -1,5 +1,10 @@
 # kuantum-test
-# Comando para ejecutar el proyecto: npm start
+# Comando para ejecutar el proyecto:
+
+### `npm start`
+
+Abrir http://localhost:4000 para verlo en el navegador.
+
 Monte una bd en Clever Cloud para ahorrar tiempo en inconvenientes.
 Tecnologias usadas:
 # Frontend:

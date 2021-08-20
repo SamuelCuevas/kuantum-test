@@ -1,5 +1,6 @@
 const { response } = require('express');
 const Alert = require('../models/Alert');
+const Device = require('../models/Device');
 
 
 
@@ -24,80 +25,51 @@ const getAlerts = async(req, res = response) => {
 
 }
 
-const getAlertById = async(req, res = response) => {
-
-    const uuid = req.params.id;
-
-    console.log(uuid);
-    // try {
-        
-    //     const alert = await Alert.findAll({
-    //         where: {
-    //             uuid: uuid
-    //         }
-    //     });
-    //     return res.status(200).json({
-    //         ok: true,
-    //         alert
-    //     })
-
-    // } catch (error) {
-    //     console.log(error);
-    // res.status(500).json({
-    //     ok: false
-    // });
-    // }
-} 
-
 const postAlert = async(req, res = response) => {
 
-    if( req.body === null) {
-        return res.status(500).json({
-            ok: false
-        });
-    }
+    const value = parseInt(req.body.value);
+    const { uuid } = req.body;
 
     try {
-        
-        await Alert.create( req.body )
-        .then( alert => {
-            return res.status(200).json({
-                ok: true,
-                msg: 'Created alert:',
-                alert
-            });
-        }).catch(err => {
-            console.log(err);
-        });
 
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            ok: false
-        });
-    }
-
-
-}
-
-const updateAlert = async(req, res = response) => {
-
-    const uuid = req.params.id;
-    
-    try {
-        
-        await Alert.update({
-            ...req.body
-        }, {
+        const dev = await Device.findAll({
             where: {
                 uuid: uuid
             }
         });
 
-        res.json({
-            ok: true,
-            msg: `Updated alert uuid: ${ uuid }`
-        })
+        console.log(dev[0].alerts_config);
+
+        if( value < dev[0].alerts_config.range.max && value > dev[0].alerts_config.range.min) {
+            return res.status(200).json({
+                ok: true,
+                msg: 'Value not unexpected'
+            });
+        }
+        
+        if(value > dev[0].alerts_config.range.max || value < dev[0].alerts_config.range.min) {
+            await Alert.create({
+                uuid: `alert_${uuid}_${value}`,
+                deviceUuid: uuid,
+                registered_value: value,
+                alert_data: {
+                    name: `alert_${uuid}`,
+                    alert_type: "Out of range",
+                    value: value,
+                    range: {
+                        min: dev[0].alerts_config.range.min,
+                        max: dev[0].alerts_config.range.max
+                    }
+                }
+            }).then( alert => {
+                return res.status(200).json({
+                ok: true,
+                msg: 'Generated alert:',
+                alert
+                });
+
+            })
+        }
 
     } catch (error) {
         console.log(error);
@@ -136,8 +108,6 @@ const deleteAlert = async(req, res = response) => {
 
 module.exports = {
     getAlerts,
-    getAlertById,
     postAlert,
-    updateAlert,
     deleteAlert
 }

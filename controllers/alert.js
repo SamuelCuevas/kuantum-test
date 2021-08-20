@@ -38,8 +38,6 @@ const postAlert = async(req, res = response) => {
             }
         });
 
-        console.log(dev[0].alerts_config);
-
         if( value < dev[0].alerts_config.range.max && value > dev[0].alerts_config.range.min) {
             return res.status(200).json({
                 ok: true,

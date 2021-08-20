@@ -6,7 +6,7 @@
 Abrir http://localhost:4000 para verlo en el navegador.
 
 Monte una bd en Clever Cloud para ahorrar tiempo en inconvenientes.
-Tecnologias usadas:
+# Tecnologias usadas:
 # Frontend:
     - React / react-router-dom / react-modal / sweetalert / moment
 # Backend:
